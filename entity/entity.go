@@ -27,7 +27,7 @@ type Plugin interface {
 	Uninstall()
 	Name() string
 	Version() string
-	SetCommunication(comm *Communication)
+	SetCommunication(comm Communication)
 }
 
 type PluginCommunication struct {
