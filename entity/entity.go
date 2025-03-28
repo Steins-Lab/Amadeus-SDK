@@ -11,7 +11,7 @@ type Communication interface {
 	ReceiveMessage() <-chan interface{}
 }
 
-// 定义插件接口
+// Plugin 定义插件接口
 type Plugin interface {
 	Install()
 	Uninstall()
@@ -25,13 +25,13 @@ type PluginCommunication struct {
 	ReceiveCh chan interface{}
 }
 
-// 插件管理器结构体
+// PluginManager 插件管理器结构体
 type PluginManager struct {
-	Plugins map[string]*loadedPlugin
+	Plugins map[string]*LoadedPlugin
 	Mu      sync.RWMutex
 }
 
-type loadedPlugin struct {
+type LoadedPlugin struct {
 	Instance Plugin
 	File     *os.File // 存储文件句柄
 	Handle   *plugin.Plugin
