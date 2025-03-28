@@ -11,13 +11,23 @@ type Communication interface {
 	ReceiveMessage() <-chan interface{}
 }
 
+func (p *PluginCommunication) SendMessage(to string, message interface{}) {
+	// 实现发送逻辑
+	p.SendCh <- message
+}
+
+func (p *PluginCommunication) ReceiveMessage() <-chan interface{} {
+	// 返回接收通道
+	return p.ReceiveCh
+}
+
 // Plugin 定义插件接口
 type Plugin interface {
 	Install()
 	Uninstall()
 	Name() string
 	Version() string
-	SetCommunication(comm Communication)
+	SetCommunication(comm *Communication)
 }
 
 type PluginCommunication struct {
