@@ -1,4 +1,4 @@
-module Amadeus-SDK
+module github.com/Steins-Lab/Amadeus-SDK
 
 go 1.24
 
