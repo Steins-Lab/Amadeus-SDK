@@ -20,19 +20,19 @@ type Plugin interface {
 	SetCommunication(comm Communication)
 }
 
-type pluginCommunication struct {
-	sendCh    chan interface{}
-	receiveCh chan interface{}
+type PluginCommunication struct {
+	SendCh    chan interface{}
+	ReceiveCh chan interface{}
 }
 
 // 插件管理器结构体
 type PluginManager struct {
-	plugins map[string]*loadedPlugin
-	mu      sync.RWMutex
+	Plugins map[string]*loadedPlugin
+	Mu      sync.RWMutex
 }
 
 type loadedPlugin struct {
-	instance Plugin
-	file     *os.File // 存储文件句柄
-	handle   *plugin.Plugin
+	Instance Plugin
+	File     *os.File // 存储文件句柄
+	Handle   *plugin.Plugin
 }
