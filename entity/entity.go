@@ -7,12 +7,22 @@ import (
 )
 
 type Communication interface {
-	SendMessage(to string, message interface{})
+	SendGroupMessage(targetId int, message interface{})
+	SendPrivateMessage(targetId int, message interface{})
 	ReceiveMessage() <-chan interface{}
 }
 
-func (p *PluginCommunication) SendMessage(to string, message interface{}) {
-	// 实现发送逻辑
+func (p *PluginCommunication) SendGroupMessage(targetId int, message interface{}) {
+	p.sendMessage(true, targetId, message)
+}
+
+func (p *PluginCommunication) SendPrivateMessage(targetId int, message interface{}) {
+	p.sendMessage(false, targetId, message)
+}
+
+func (p *PluginCommunication) sendMessage(isGroup bool, targetId int, message interface{}) {
+	p.TargetId = targetId
+	p.IsGroup = isGroup
 	p.SendCh <- message
 }
 
@@ -31,6 +41,8 @@ type Plugin interface {
 }
 
 type PluginCommunication struct {
+	IsGroup   bool
+	TargetId  int
 	SendCh    chan interface{}
 	ReceiveCh chan interface{}
 }
