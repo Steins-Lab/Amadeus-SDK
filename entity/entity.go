@@ -2,6 +2,7 @@ package entity
 
 import (
 	"github.com/Steins-Lab/Amadeus-SDK/event"
+	"log/slog"
 	"os"
 	"plugin"
 	"sync"
@@ -52,6 +53,7 @@ type PluginCommunication struct {
 type PluginManager struct {
 	Plugins map[string]*LoadedPlugin
 	Mu      sync.RWMutex
+	Logger  *slog.Logger
 }
 
 type LoadedPlugin struct {
