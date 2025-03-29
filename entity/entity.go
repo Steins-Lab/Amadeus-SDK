@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"github.com/Steins-Lab/Amadeus-SDK/event"
 	"os"
 	"plugin"
 	"sync"
@@ -9,7 +10,7 @@ import (
 type Communication interface {
 	SendGroupMessage(targetId int, message interface{})
 	SendPrivateMessage(targetId int, message interface{})
-	ReceiveMessage() <-chan interface{}
+	ReceiveMessage() <-chan event.Event
 }
 
 func (p *PluginCommunication) SendGroupMessage(targetId int, message interface{}) {
@@ -26,7 +27,7 @@ func (p *PluginCommunication) sendMessage(isGroup bool, targetId int, message in
 	p.SendCh <- message
 }
 
-func (p *PluginCommunication) ReceiveMessage() <-chan interface{} {
+func (p *PluginCommunication) ReceiveMessage() <-chan event.Event {
 	// 返回接收通道
 	return p.ReceiveCh
 }
@@ -44,7 +45,7 @@ type PluginCommunication struct {
 	IsGroup   bool
 	TargetId  int
 	SendCh    chan interface{}
-	ReceiveCh chan interface{}
+	ReceiveCh chan event.Event
 }
 
 // PluginManager 插件管理器结构体
