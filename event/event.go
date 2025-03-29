@@ -1,5 +1,8 @@
 package event
 
+import "C"
+
+//export Event
 type Event struct {
 	PostType      string `json:"post_type"`
 	MessageType   string `json:"message_type"`

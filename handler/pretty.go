@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"C"
 	"context"
 	"github.com/fatih/color"
 	"io"
@@ -8,14 +9,18 @@ import (
 	"log/slog"
 )
 
+//export PrettyHandlerOptions
 type PrettyHandlerOptions struct {
 	SlogOpts slog.HandlerOptions
 }
+
+//export PrettyHandler
 type PrettyHandler struct {
 	slog.Handler
 	l *log.Logger
 }
 
+//export Handle
 func (h *PrettyHandler) Handle(ctx context.Context, r slog.Record) error {
 	level := r.Level.String() + ":"
 	switch r.Level {
@@ -40,6 +45,7 @@ func (h *PrettyHandler) Handle(ctx context.Context, r slog.Record) error {
 	return nil
 }
 
+//export NewPrettyHandler
 func NewPrettyHandler(
 	out io.Writer,
 	opts PrettyHandlerOptions,
